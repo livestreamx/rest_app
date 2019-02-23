@@ -1,0 +1,18 @@
+# bin/sh
+# GET
+curl -i http://localhost:5000/api/v1/employees
+curl -i http://localhost:5000/api/v1/employees/1
+
+# POST
+curl -i http://localhost:5000/api/v1/employees -H "Content-Type: application/json" -X POST -d '{"name":"Aleksey Alekseevich Alekseev", "birthdate": "02.02.1992", "position": "Senior python developer", "enrollmentdate": "02.02.2015"}'
+# 1 filter
+curl -i http://localhost:5000/api/v1/employees/filter -H "Content-Type: application/json" -X POST -d '[{"key":"position", "expr":"=", "value":"Senior python developer"}]'
+# 2 filters
+curl -i http://localhost:5000/api/v1/employees/filter -H "Content-Type: application/json" -X POST -d '[{"key":"position", "expr":"=", "value":"Senior python developer"},{"key":"age","expr":">","value":"22"}]'
+# 5 filters
+curl -i http://localhost:5000/api/v1/employees/filter -H "Content-Type: application/json" -X POST -d '[{"key":"position", "expr":"=", "value":"Senior python developer"},{"key":"age","expr":">=","value":"22"},{"key":"age","expr":"<=","value":"33"},{"key":"experience","expr":">","value":"1"},{"key":"experience","expr":"<","value":"5"}]'
+
+# DELETE
+curl -i http://localhost:5000/api/v1/employees -X DELETE
+curl -i http://localhost:5000/api/v1/employees/1 -X DELETE
+curl -i http://localhost:5000/api/v1/employees/filter -X DELETE -H "Content-Type: application/json" -X DELETE -d '[{"key":"position", "expr":"=", "value":"Senior python developer"}]'
